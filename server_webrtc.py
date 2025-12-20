@@ -19,7 +19,7 @@ from gi.repository import Gst, GstWebRTC, GstSdp, GLib
 # =========================
 # Config
 # =========================
-SENSOR_ID   = "d8:3a:dd:f7:21:52"
+SENSOR_ID   = "d8:3a:dd:f7:1a:cc"
 SIGNAL_URL  = f"wss://rsm.ane.gov.co:12443/ws/signal/{SENSOR_ID}"
 STUN_SERVER = "stun://stun.l.google.com:19302"
 
@@ -98,8 +98,11 @@ class Publisher:
 
         # Caps para Opus "raw" (paquetes Opus) que vienen del motor C
         # Nota: opusparse suele funcionar bien si le entregas frames Opus completos.
-        caps = Gst.Caps.from_string("audio/x-opus, rate=48000, channels=1")
+        caps = Gst.Caps.from_string(
+            "audio/x-opus, rate=(int)48000, channels=(int)1, channel-mapping-family=(int)0"
+        )
         self.appsrc.set_property("caps", caps)
+
 
         self.webrtc.connect("on-negotiation-needed", self.on_negotiation_needed)
         self.webrtc.connect("on-ice-candidate", self.on_ice_candidate)
@@ -360,3 +363,4 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+

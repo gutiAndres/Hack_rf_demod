@@ -1,4 +1,4 @@
-#!/home/ogutierreze/GPDS_Proyects/rf_audio_beta/venv/bin/python3.12
+#!/home/anepi/test_modulate/Hack_rf_demod/venv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys

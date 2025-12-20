@@ -6,18 +6,31 @@
 #include <complex.h>
 
 typedef struct {
-    // Demodulator state
     double complex prev_sample;
-    // Decimation state
+
     double audio_acc;
     int samples_in_acc;
     int decim_factor;
-    // De-emphasis state
+
     float deemph_acc;
     float deemph_alpha;
-    // Output gain
-    double gain;
+
+    float gain;
+
+    // --- DC blocker (high-pass) ---
+    float dc_r;
+    float dc_x1;
+    float dc_y1;
+
+    // --- Biquad LPF (RBJ cookbook) ---
+    float b0, b1, b2, a1, a2;
+    float z1, z2; // Direct Form II transposed state
+
+    // enable flags
+    int enable_dc_block;
+    int enable_lpf;
 } fm_radio_t;
+
 
 /**
  * @brief Setup the radio state.
